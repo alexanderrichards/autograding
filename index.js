@@ -7695,7 +7695,13 @@ exports.getInput = getInput;
  */
 function setOutput(name, value) {
     // command_1.issueCommand('set-output', { name }, value);
-    command_1.issueCommand('echo "' + {name} + '=' + {value} + '" >> $GITHUB_OUTPUT')
+  const filePath = process.env['GITHUB_OUTPUT'] || ''
+  if (filePath) {
+    return issueFileCommand('OUTPUT', prepareKeyValueMessage(name, value))
+  }
+
+  process.stdout.write(os.EOL)
+  issueCommand('set-output', {name}, toCommandValue(value))
 }
 exports.setOutput = setOutput;
 //-----------------------------------------------------------------------
