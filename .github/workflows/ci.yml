@@ -32,5 +32,10 @@ jobs:
           node-version: 20
       - run: npm ci
       - run: npm run build
-
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-index
+          path: |
+            dist/index.js
       - uses: ./
