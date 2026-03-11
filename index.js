@@ -34418,7 +34418,8 @@ const run = async () => {
         if (!cwd) {
             throw new Error('No GITHUB_WORKSPACE');
         }
-        const data = fs_1.default.readFileSync(path_1.default.resolve(cwd, '.github/classroom/autograding.json'));
+        const jsonPath = core.getInput('autograding-json-path') || '.github/classroom/autograding.json';
+        const data = fs_1.default.readFileSync(path_1.default.resolve(cwd, jsonPath));
         const json = JSON.parse(data.toString());
         await (0, runner_1.runAll)(json.tests, cwd);
     }
